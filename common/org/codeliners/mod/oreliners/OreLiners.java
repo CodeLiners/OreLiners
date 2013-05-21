@@ -1,6 +1,8 @@
 package org.codeliners.mod.oreliners;
 
-import org.codeliners.mod.oreliners.config.OreConfiguration;
+import java.io.File;
+
+import org.codeliners.mod.oreliners.config.OreXML;
 
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;
@@ -19,11 +21,13 @@ public class OreLiners {
 	
 	@Instance("OreLiners")
 	public static OreLiners instance;
+	public static File oreXML;
+
 		
 	@PreInit
 	public void preLoad(FMLPreInitializationEvent event) {
-		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-		OreConfiguration.init(config);
+		oreXML = new File(event.getModConfigurationDirectory().getAbsoluteFile(), "OreLiners/oreConfig.xml");
+		OreXML.init(oreXML, event);
 	}
 
 	@Init
