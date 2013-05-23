@@ -1,0 +1,35 @@
+#!/bin/bash
+# Script by Kilobyte (Stephan Henrichs)
+
+# Usage: put into mcp dir 
+# run this command: mkdir "out"; echo "next version, for example 1 0 0 for 1.0.0" > VERSION; mkdir addbuildfiles
+
+# config
+MODNAME="KilobytesPeripherals"
+
+echo "Reading version file..."
+ver=(`cat 'VERSION'`)
+verstr="${ver[0]}.${ver[1]}.${ver[2]}"
+echo "Done, building Version... ${verstr}"
+start=`date +%s`
+echo "Recompiling..."
+python runtime/recompile.py "$@" || exit
+echo "Done, Reobfuscating"
+python runtime/reobfuscate.py --srgnames || exit
+echo "Done, copying additional files to output dir..."
+pwd
+cp -r addbuildfiles/* reobf/minecraft/
+
+echo "Done, packing jar as ${MODNAME}_${verstr}.jar"
+cd "reobf/minecraft"
+find . -name "*" | zip "../../out/${MODNAME}_${verstr}.jar" -@
+echo "Done, updating version file"
+
+ver[2]=$((ver[2] + 1))
+cd ../..
+echo "${ver[0]} ${ver[1]} ${ver[2]}" > VERSION
+end=`date %s`
+diff=$((end - start))
+echo "Done, Took $diff Seconds"
+# comment out when not using KDE
+kdialog --title "Build done" --passivepopup "Build of ${MODNAME}_${verstr}.jar done in $diff Seconds."
