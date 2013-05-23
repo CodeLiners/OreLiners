@@ -13,6 +13,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.minecraft.block.Block;
+
 import org.codeliners.mod.oreliners.OreLiners;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -21,6 +23,13 @@ import org.w3c.dom.Element;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class CreateOreXML {
+	
+	protected static String[] ores = {"Iron", "Diamond", "Gold", "Coal", "Redstone", "Emerald"};
+	protected static int[] oresId = {Block.oreIron.blockID, Block.oreDiamond.blockID, Block.oreGold.blockID, Block.oreCoal.blockID, Block.oreRedstone.blockID, Block.oreEmerald.blockID};
+	protected static int[] oreSpawnRate = {40, 4, 7, 50, 10, 30};
+	protected static int[] oreMaxHeight = {63, 15, 30, 63, 25, 50};
+	protected static int[] oreMinHeight = {1, 1, 1, 1, 1, 1};
+	protected static int[] oreMaxVeinSize = {6,6,6,6,6,2};
 	
 	public static void CreateOreXML(FMLPreInitializationEvent event) {
 		
@@ -36,32 +45,41 @@ public class CreateOreXML {
 	 
 			// root elements
 			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("Ores");
+			Element rootElement = doc.createElement("OreLiners");
 			doc.appendChild(rootElement);
+			
+			for (int a = 0; a < ores.length; a++){
+				
+			Element material = doc.createElement("material");
+			rootElement.appendChild(material);
+			material.setAttribute("name", ores[a]);
+			material.setAttribute("id", String.valueOf(oresId[a]));
+				
+			// Generator elements
+			Element gen = doc.createElement("Generator");
+			material.appendChild(gen);
+			gen.setAttribute("type", "vanilla");
 	 
-			// Ore elements
-			Element ore = doc.createElement("Ore");
-			rootElement.appendChild(ore);
-	 
-			// OreName elements
-			Element OreName = doc.createElement("OreName");
-			OreName.appendChild(doc.createTextNode("Iron"));
-			ore.appendChild(OreName);
-	 
-			// OreID elements
-			Element OreID = doc.createElement("OreID");
-			OreID.appendChild(doc.createTextNode("15"));
-			ore.appendChild(OreID);
-	 
-			// SpawnRatePerChunk elements
-			Element SpawnRatePerChunk = doc.createElement("SpawnRatePerChunk");
-			SpawnRatePerChunk.appendChild(doc.createTextNode("20"));
-			ore.appendChild(SpawnRatePerChunk);
-	 
-			// MaxSpawnHeight elements
-			Element MaxSpawnHeight = doc.createElement("MaxSpawnHeight");
-			MaxSpawnHeight.appendChild(doc.createTextNode("40"));
-			ore.appendChild(MaxSpawnHeight);
+			// veinsize elements
+			Element veinsize = doc.createElement("veinsize");
+			gen.appendChild(veinsize);
+			veinsize.setAttribute("max", String.valueOf(oreMaxVeinSize[a]));
+			
+			// spawnrate elements
+			Element spawnrate = doc.createElement("spawnrate");
+			gen.appendChild(spawnrate);
+			spawnrate.setAttribute("value", String.valueOf(oreSpawnRate[a]));	
+			
+			// oreheight elements
+			Element oreheight = doc.createElement("oreheight");
+			gen.appendChild(oreheight);
+			oreheight.setAttribute("min", String.valueOf(oreMinHeight[a]));
+			oreheight.setAttribute("max", String.valueOf(oreMaxHeight[a]));
+
+			
+			}
+			
+			
 	 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
