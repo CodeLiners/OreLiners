@@ -30,7 +30,7 @@ public class OreLiners {
 
 	@Init
 	public void init(FMLInitializationEvent event) {
-
+		GameRegistry.registerWorldGenerator(new WorldGenerator());
 	}
 	
 	@PostInit
