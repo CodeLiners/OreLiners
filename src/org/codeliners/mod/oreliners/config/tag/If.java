@@ -18,7 +18,7 @@ public class If implements IElement {
 
     @Override
     public void parse(Node node, IParserAccess parser) {
-        NamedNodeMap map = node.getAttributes();
+        String value = node.getAttributes().getNamedItem("condition").getNodeValue();
 
     }
 }

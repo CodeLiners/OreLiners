@@ -14,7 +14,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(clientSideRequired = false, serverSideRequired = false)
 @Mod(modid = "OreLiners", name = "OreLiners", version = "0.0.1")
 public class OreLiners {
 	
@@ -24,17 +24,17 @@ public class OreLiners {
 
 		
 	@PreInit
-	public void preLoad(FMLPreInitializationEvent event) {
-
+	public void preInti(FMLPreInitializationEvent event) {
+        oreXML = event.getSuggestedConfigurationFile();
 	}
 
 	@Init
-	public void load(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event) {
 
 	}
 	
 	@PostInit
-	public void postLoad(FMLPostInitializationEvent event){
+	public void postInit(FMLPostInitializationEvent event){
 		
 	}
 
