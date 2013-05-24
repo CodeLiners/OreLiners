@@ -2,7 +2,7 @@ package org.codeliners.mod.oreliners.api.config;
 
 import javax.xml.soap.Node;
 
-public interface ITag {
+public interface IElement {
     /**
      * Returns the name of the section
      * @return the name of the section
@@ -13,7 +13,7 @@ public interface ITag {
      * What Tags can this tag be used inside of?
      * @return A list of tag classes this can be used in. empty if any.
      */
-    Class<?extends ITag>[] getScopes();
+    Class<?extends IElement>[] getScopes();
 
     /**
      * tells the statement to parse an xml node
