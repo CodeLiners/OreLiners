@@ -1,6 +1,6 @@
 package org.codeliners.mod.oreliners.api.config;
 
-import javax.xml.soap.Node;
+import org.w3c.dom.Node;
 
 public interface IElement {
 

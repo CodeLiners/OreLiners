@@ -13,11 +13,11 @@ import org.w3c.dom.Element;
 import java.util.Map;
 import java.util.Random;
 
-public class Vanilla implements IGenerator{
+public class VanillaGenerator implements IGenerator{
 
 	@Override
 	public String getName() {
-		return "Vanilla";
+		return "vanilla";
 	}
 
     @Override

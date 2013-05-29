@@ -1,8 +1,8 @@
 package org.codeliners.mod.oreliners.api.config;
 
 import net.minecraft.item.ItemStack;
+import org.w3c.dom.Node;
 
-import javax.xml.soap.Node;
 
 public interface IParserAccess {
     void parse(Node node);

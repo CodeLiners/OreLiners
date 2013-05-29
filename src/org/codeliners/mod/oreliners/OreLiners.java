@@ -1,8 +1,6 @@
 package org.codeliners.mod.oreliners;
 
 import java.io.File;
-
-import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -13,6 +11,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import org.codeliners.mod.oreliners.api.OreLinersRegistry;
+import org.codeliners.mod.oreliners.generators.VanillaGenerator;
 
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
 @Mod(modid = "OreLiners", name = "OreLiners", version = "0.0.1")
@@ -31,6 +31,8 @@ public class OreLiners {
 	@Init
 	public void init(FMLInitializationEvent event) {
 		GameRegistry.registerWorldGenerator(new WorldGenerator());
+
+        OreLinersRegistry.registerGenerator(new VanillaGenerator());
 	}
 	
 	@PostInit
